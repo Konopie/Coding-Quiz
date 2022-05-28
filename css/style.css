@@ -1,0 +1,31 @@
+* {
+    color: purple;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+button {
+    background-color: purple;
+    color: white;
+    border-radius: 15px; 
+    margin: 10px;
+    font-size: 3vh;
+}
+
+#answers {
+    display: flex;
+    flex-direction: column;
+}
+
+.answers {
+    flex: 1;
+}
+
+.container {
+    border-bottom: 2px solid purple;
+}

@@ -8,6 +8,9 @@
     <title>Coding Quiz</title>
 </head>
 <body>
+    <section id="timer">
+        <p id="seconds"></p>
+    </section>
     <header class="container" id="question">
         Are You Ready To Rumble?
     </header>
@@ -20,7 +23,7 @@
     <div id="results">
         <h3>Results:</h3>
         <p id="currentResult"></p>
-        <button id="startBtn">Start</button>
+        <button id="startBtn" onclick="countdown()">Start</button>
     </div>
     <script src="./js/script.js"></script>
 </body>

@@ -1,5 +1,7 @@
-// question counter
+// counters
 var questionIdCounter = 0;
+var score = 0;
+var secs = 60;
 
 // declare questions
 const questions = [
@@ -16,7 +18,7 @@ const questions = [
     {
         id: 1,
         question: "How do you write 'Hello World' in an alert box?",
-      answers: [
+        answers: [
           { text: 'msgBox("Hello World");', isCorrect: false},
           { text: 'alert("Hello World");', isCorrect: true},
           { text: 'alertBox("Hello World");', isCorrect: false},
@@ -26,7 +28,7 @@ const questions = [
     {
         id: 2,
         question: "How do you create a function in JavaScript?",
-      answers: [
+        answers: [
           { text: 'function = myFunction()', isCorrect: true},
           { text: 'function myFunction()', isCorrect: false},
           { text: 'funciton: myFunction()', isCorrect: false},
@@ -36,7 +38,7 @@ const questions = [
     {
         id: 3,
         question: 'How do you call a function named "myFunction"?',
-      answers: [
+         answers: [
           { text: 'call function myFunction()', isCorrect: false},
           { text: 'call myFunction()', isCorrect: false},
           { text: 'myFunction()', isCorrect: true},
@@ -46,7 +48,7 @@ const questions = [
     {
         id: 4,
         question: "How to write an IF statement in JavaScript?",
-      answers: [
+        answers: [
           { text: 'if i = 4 then', isCorrect: false},
           { text: 'if i = 5', isCorrect: false},
           { text: 'if i == 5 then', isCorrect: false},
@@ -56,7 +58,7 @@ const questions = [
     {
         id: 5,
         question: "How to write an IF statement for executing some code if 'i' is NOT equal to 5?",
-      answers: [
+        answers: [
           { text: 'if (i != 5)', isCorrect: true},
           { text: 'if i != 5 then', isCorrect: false},
           { text: 'if (i <> 5)', isCorrect: false},
@@ -66,7 +68,7 @@ const questions = [
     {
         id: 6,
         question: "How does a FOR loop start?",
-      answers: [
+        answers: [
           { text: 'for (i = 0; i <= 5)', isCorrect: false},
           { text: 'for i = 1 to 5', isCorrect: false},
           { text: 'for (i = 0; i <= 5; i++)', isCorrect: true},
@@ -76,7 +78,7 @@ const questions = [
     {
         id: 7,
         question: "How do you write 'Hello World' in an alert box?",
-      answers: [
+        answers: [
           { text: 'msgBox("Hello World");', isCorrect: false},
           { text: 'alert("Hello World");', isCorrect: true},
           { text: 'alertBox("Hello World");', isCorrect: false},
@@ -86,7 +88,7 @@ const questions = [
     {
         id: 8,
         question: "How can you add a comment in a JavaScript?",
-      answers: [
+        answers: [
           { text: '<!-- This is a Comment -->', isCorrect: false},
           { text: '// This is a Comment', isCorrect: true},
           { text: '~~ This is a Comment ~~', isCorrect: false},
@@ -96,7 +98,7 @@ const questions = [
     {
         id: 9,
         question: "How do you find the number with the highest value of x and y?",
-      answers: [
+        answers: [
           { text: 'top(x,y)', isCorrect: false},
           { text: 'Math.ceil(x,y)', isCorrect: false},
           { text: 'Math.max(x,y)', isCorrect: true},
@@ -123,9 +125,6 @@ var createQuestion = function() {
     // question id to id
     var id = questionIdCounter;
 
-    // change start button to next button 
-    startBtn.textContent = "Next";
-
     // create question text from question array id
     question.innerText = questions[id].question;
 
@@ -141,6 +140,11 @@ var createQuestion = function() {
     opt3.value = questions[id].answers[2].isCorrect;
     opt4.value = questions[id].answers[3].isCorrect;
 
+    questionIdCounter++;
+
+}
+
+function createListeners() {
     // empty string to hold selected value
     var selected = "";
 
@@ -148,29 +152,86 @@ var createQuestion = function() {
     opt1.addEventListener("click", () => {
         selected = opt1.value,
         console.log(opt1.value),
-        currentResults.innerText = opt1.value,
-        createQuestion();
+        currentResults.innerText = opt1.value;
+        if (opt1.value === 'true') {
+            score++;
+        }
+        console.log(score);console.log(selected);
+        if (selected = true) {
+            createQuestion();
+        }
     });
     opt2.addEventListener("click", () => {
         selected = opt2.value,
         console.log(opt2.value),
-        currentResults.innerText = opt2.value,
-        createQuestion();
+        currentResults.innerText = opt2.value;
+        if (opt2.value === 'true') {
+            score++;
+        }
+        console.log(score);console.log(selected);
+        if (selected = true) {
+            createQuestion();
+        }
     });
     opt3.addEventListener("click", () => {
         selected = opt3.value,
         console.log(opt3.value),
-        currentResults.innerText = opt3.value,
-        createQuestion();
+        currentResults.innerText = opt3.value;
+        if (opt3.value === true) {
+            score++;
+        }
+        console.log(score);
+        if (selected = true) {
+            createQuestion();
+        }
     });
     opt4.addEventListener("click", () => {
         selected = opt4.value,
         console.log(opt4.value),
-        currentResults.innerText = opt4.value,
-        createQuestion();
+        currentResults.innerText = opt4.value;
+        if (opt4.value === true) {
+            score++;
+        }
+        console.log(score);
+        if (selected = true) {
+            createQuestion();
+        }
     });
 
-    questionIdCounter++;
+    
 }
+
+// timer
+function countdown() {
+    setTimeout('Decrement()', 60);
+}
+
+
+// decrement function found on geeks for geeks
+function Decrement() {
+    if (document.getElementById) {
+        seconds = document.getElementById("seconds");
+
+        if (secs < 60) {
+        seconds.textContent = secs;
+        }
+
+        // page alert time up
+        if (secs < 0) {
+            alert('time up');
+            seconds.value = 0;
+        }
+        //if seconds > 0 then seconds is decremented
+        else {
+            secs--;
+            setTimeout('Decrement()', 1000);
+        }
+    }
+}
+
+// save highscore
+
+
+createListeners();
 
 startBtn.addEventListener("click", createQuestion)

@@ -77,12 +77,12 @@ const questions = [
     },
     {
         id: 7,
-        question: "How do you write 'Hello World' in an alert box?",
+        question: "Which event occurs when the user clicks on an HTML element?",
         answers: [
-          { text: 'msgBox("Hello World");', isCorrect: false},
-          { text: 'alert("Hello World");', isCorrect: true},
-          { text: 'alertBox("Hello World");', isCorrect: false},
-          { text: 'msg("Hello World");', isCorrect: false}
+          { text: 'onmouseclick', isCorrect: false},
+          { text: 'onclick', isCorrect: true},
+          { text: 'onmouseover', isCorrect: false},
+          { text: 'onchange', isCorrect: false}
       ]
     },
     {
@@ -113,6 +113,8 @@ var question = document.getElementById("question")
 var answers = document.getElementById("answers")
 var results = document.getElementById("results")
 
+var scores = []
+
 var opt1 = document.getElementById("opt1")
 var opt2 = document.getElementById("opt2")
 var opt3 = document.getElementById("opt3")
@@ -142,6 +144,12 @@ var createQuestion = function() {
 
     questionIdCounter++;
 
+    // when out of questions prompt save score
+    if (questionIdCounter > 10) {
+        var initials = prompt('enter initials ');
+            seconds.value = 0;
+            saveHighscore(initials);
+    }
 }
 
 function createListeners() {
@@ -156,7 +164,10 @@ function createListeners() {
         if (opt1.value === 'true') {
             score++;
         }
-        console.log(score);console.log(selected);
+        else {
+            secs -= 5;
+        }
+        console.log(score);
         if (selected = true) {
             createQuestion();
         }
@@ -168,33 +179,42 @@ function createListeners() {
         if (opt2.value === 'true') {
             score++;
         }
-        console.log(score);console.log(selected);
+        console.log(score);
         if (selected = true) {
             createQuestion();
+        }
+        else {
+            secs -= 5;
         }
     });
     opt3.addEventListener("click", () => {
         selected = opt3.value,
         console.log(opt3.value),
         currentResults.innerText = opt3.value;
-        if (opt3.value === true) {
+        if (opt3.value === 'true') {
             score++;
         }
         console.log(score);
         if (selected = true) {
             createQuestion();
+        }
+        else {
+            secs -= 5;
         }
     });
     opt4.addEventListener("click", () => {
         selected = opt4.value,
         console.log(opt4.value),
         currentResults.innerText = opt4.value;
-        if (opt4.value === true) {
+        if (opt4.value === 'true') {
             score++;
         }
         console.log(score);
         if (selected = true) {
             createQuestion();
+        }
+        else {
+            secs -= 5;
         }
     });
 
@@ -212,14 +232,16 @@ function Decrement() {
     if (document.getElementById) {
         seconds = document.getElementById("seconds");
 
+        // display time
         if (secs < 60) {
         seconds.textContent = secs;
         }
 
         // page alert time up
         if (secs < 0) {
-            alert('time up');
+            var initials = prompt('enter initials ');
             seconds.value = 0;
+            saveHighscore(initials);
         }
         //if seconds > 0 then seconds is decremented
         else {
@@ -230,8 +252,41 @@ function Decrement() {
 }
 
 // save highscore
+var saveHighscore = function(initials) {
+    localStorage.setItem("highscore", JSON.stringify(initials + " " + score));
+  };
 
+// load highscores 
+var loadScores = function() {
+    var savedScores = localStorage.getItem("highscore");
+    // if there are no scores, set scores to an empty array and return out of the function
+    if (!savedScores) {
+      return false;
+    }
+    console.log("Saved score found!");
+    // else, load up saved tasks
+
+    console.log("last Highscore was" + savedScores);
+  
+    // for (var i = 0; i < savedScores.length; i++) {
+    //     // pass each task object into the `createTaskEl()` function
+    //     createScoreEl(savedScores);
+    //   }
+  };
+
+//   non functional highscore creation
+//   function createScoreEl(savedScores) {
+//     var listScoreEl = document.createElement("li");
+//     listScoreEl.className = "score-item";
+
+//     scores.push(savedScores);
+
+//     console.log(scores)
+//     listScoreEl.innerHTML = scores ;
+//   }
 
 createListeners();
+
+loadScores();
 
 startBtn.addEventListener("click", createQuestion)

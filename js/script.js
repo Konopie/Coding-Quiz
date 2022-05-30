@@ -127,6 +127,16 @@ var createQuestion = function() {
     // question id to id
     var id = questionIdCounter;
 
+    // iterate counter for next question
+    questionIdCounter++;
+
+    // when out of questions prompt save score
+    if (questionIdCounter > 10) {
+        seconds.value = 0;
+        var initials = prompt('GAME OVER: enter initials ');
+        saveHighscore(initials);
+    }
+    
     // create question text from question array id
     question.innerText = questions[id].question;
 
@@ -141,16 +151,6 @@ var createQuestion = function() {
     opt2.value = questions[id].answers[1].isCorrect;
     opt3.value = questions[id].answers[2].isCorrect;
     opt4.value = questions[id].answers[3].isCorrect;
-
-    // iterate counter for next question
-    questionIdCounter++;
-
-    // when out of questions prompt save score
-    if (questionIdCounter > 10) {
-        var initials = prompt('GAME OVER: enter initials ');
-            seconds.value = 0;
-            saveHighscore(initials);
-    }
 }
 
 function createListeners() {

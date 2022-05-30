@@ -142,32 +142,36 @@ var createQuestion = function() {
     opt3.value = questions[id].answers[2].isCorrect;
     opt4.value = questions[id].answers[3].isCorrect;
 
+    // iterate counter for next question
     questionIdCounter++;
 
     // when out of questions prompt save score
     if (questionIdCounter > 10) {
-        var initials = prompt('enter initials ');
+        var initials = prompt('GAME OVER: enter initials ');
             seconds.value = 0;
             saveHighscore(initials);
     }
 }
 
 function createListeners() {
-    // empty string to hold selected value
-    var selected = "";
 
     // listeners
     opt1.addEventListener("click", () => {
         selected = opt1.value,
         console.log(opt1.value),
+        // log results 
         currentResults.innerText = opt1.value;
+        // if true increase score
         if (opt1.value === 'true') {
             score++;
         }
+        // if not true subtract time
         else {
             secs -= 5;
         }
+        // log new score
         console.log(score);
+        // once option is selected load new question
         if (selected = true) {
             createQuestion();
         }
@@ -239,7 +243,7 @@ function Decrement() {
 
         // page alert time up
         if (secs < 0) {
-            var initials = prompt('enter initials ');
+            var initials = prompt('GAME OVER: enter initials ');
             seconds.value = 0;
             saveHighscore(initials);
         }
@@ -268,22 +272,7 @@ var loadScores = function() {
 
     console.log("last Highscore was" + savedScores);
   
-    // for (var i = 0; i < savedScores.length; i++) {
-    //     // pass each task object into the `createTaskEl()` function
-    //     createScoreEl(savedScores);
-    //   }
   };
-
-//   non functional highscore creation
-//   function createScoreEl(savedScores) {
-//     var listScoreEl = document.createElement("li");
-//     listScoreEl.className = "score-item";
-
-//     scores.push(savedScores);
-
-//     console.log(scores)
-//     listScoreEl.innerHTML = scores ;
-//   }
 
 createListeners();
 
